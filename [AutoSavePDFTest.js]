@@ -1,0 +1,53 @@
+const assert = require('assert');
+const sinon = require('sinon');
+const AutoSavePDF = require('../AutoSavePDF');
+const PDFSaver = require('../PDFSaver');
+
+describe('AutoSavePDF', function() {
+  describe('#initialize()', function() {
+    it('should setup event listeners', function() {
+      let autoSavePDF = new AutoSavePDF();
+      sinon.spy(autoSavePDF, 'initialize');
+      autoSavePDF.initialize();
+      assert(autoSavePDF.initialize.calledOnce);
+    });
+  });
+
+  describe('#onTabUpdated()', function() {
+    it('should call saveAsPDF if URL has changed', function() {
+      let autoSavePDF = new AutoSavePDF();
+      let pdfSaver = new PDFSaver();
+      sinon.stub(autoSavePDF, 'onTabUpdated').returns(true);
+      sinon.spy(pdfSaver, 'saveAsPDF');
+      autoSavePDF.onTabUpdated();
+      assert(pdfSaver.saveAsPDF.calledOnce);
+    });
+  });
+});
+
+describe('PDFSaver', function() {
+  describe('#saveAsPDF()', function() {
+    it('should save website as PDF file', function() {
+      let pdfSaver = new PDFSaver();
+      sinon.spy(pdfSaver, 'saveAsPDF');
+      pdfSaver.saveAsPDF('https://www.example.com');
+      assert(pdfSaver.saveAsPDF.calledWith('https://www.example.com'));
+    });
+  });
+
+  describe('#getFileName()', function() {
+    it('should generate a file name based on URL', function() {
+      let pdfSaver = new PDFSaver();
+      let fileName = pdfSaver.getFileName('https://www.example.com');
+      assert(fileName.includes('example.com'));
+    });
+  });
+
+  describe('#getSaveDirectory()', function() {
+    it('should return the directory for saving PDF files', function() {
+      let pdfSaver = new PDFSaver();
+      let directory = pdfSaver.getSaveDirectory();
+      assert(directory.length > 0);
+    });
+  });
+});

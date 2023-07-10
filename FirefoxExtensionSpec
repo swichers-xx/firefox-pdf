@@ -1,0 +1,43 @@
+# Specification for Firefox Extension: AutoSavePDF
+
+## 1. Overview
+The AutoSavePDF is a Firefox extension that automatically saves every website visited by the user as a PDF file. The extension operates without any user interaction, and it saves the PDF files in a pre-set directory. 
+
+## 2. Features
+- Automatically save every visited website as a PDF file
+- Save PDF files in a pre-set directory
+- Allow users to set the directory for saving PDF files
+- Automatically name the PDF files based on the website's title or URL
+- Include timestamps in the PDF file names
+- Handle errors and exceptions gracefully
+
+## 3. Core Classes and Methods
+
+### 3.1. Class `AutoSavePDF`
+This is the main class of the extension. It initializes the extension and sets up the necessary event listeners.
+
+#### 3.1.1. Method `initialize()`
+This method initializes the extension. It sets up the event listeners for the browser tabs.
+
+#### 3.1.2. Method `onTabUpdated()`
+This method is called when a tab is updated. It checks if the tab's URL has changed, and if so, it calls the `saveAsPDF()` method.
+
+### 3.2. Class `PDFSaver`
+This class is responsible for saving websites as PDF files.
+
+#### 3.2.1. Method `saveAsPDF(url)`
+This method saves a website as a PDF file. It takes the URL of the website as a parameter.
+
+#### 3.2.2. Method `getFileName(url)`
+This method generates a file name for the PDF file. It takes the URL of the website as a parameter and returns a string.
+
+#### 3.2.3. Method `getSaveDirectory()`
+This method returns the directory where the PDF files should be saved. It reads the directory from the extension's settings.
+
+## 4. Dependencies
+- **Firefox Add-on SDK**: This is the standard SDK for developing Firefox extensions. It provides the APIs for interacting with the browser and the user's system.
+- **pdf.js**: This is a JavaScript library for generating PDF files. It will be used to convert the websites to PDF format.
+- **fs (File System) module**: This is a Node.js module for interacting with the file system. It will be used to save the PDF files to the user's system.
+
+## 5. Error Handling
+The extension should handle errors and exceptions gracefully. If an error occurs while saving a website as a PDF, the extension should log the error and continue with the next website. The user should not be interrupted by any error messages.
