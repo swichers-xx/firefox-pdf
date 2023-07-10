@@ -1,0 +1,14 @@
+{
+"name": "autosavepdf",
+"version": "1.0.0",
+"description": "Automatically saves every website visited as a PDF",
+"main": "background.js",
+"scripts": {
+"start": "web-ext run"
+},
+"dependencies": {
+"webextension-polyfill-ts": "^0.22.0",
+"pdfjs-dist": "^2.6.347",
+"fs": "^0.0.1-security"
+}
+}
